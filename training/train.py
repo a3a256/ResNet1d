@@ -26,7 +26,7 @@ from resnet1d import *
 
 def training_model_whole(train_dl, val_dl, model, criterion, optimizer, scheduler, epochs):
     EPOCHS = epochs
-    best_mode = deepcopy(model)
+    best_model = deepcopy(model)
     best_acc = 0
 
     train_loss = []
@@ -120,3 +120,9 @@ def training(epochs, lr, step, gamma, batch, out_size=4):
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=LR)
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=STEP, gamma=GAMMA)
+
+    model, best_model = training_model_whole(train_dl, val_dl, model, criterion, optimizer, scheduler, EPOCHS)
+
+
+if __name__ == "__main__":
+    pass

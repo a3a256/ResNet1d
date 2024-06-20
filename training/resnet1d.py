@@ -25,20 +25,20 @@ class ResBlock(nn.Module):
 class ResNet(nn.Module):
     def __init__(self, block, in_channels, out_size, kernel_size, stride, padding, layers):
         super(ResNet, self).__init__()
-        self.conv_layer = nn.Sequential(nn.Conv2d(in_channels, 16, kernel_size=kernel_size, stride=stride, padding=padding),
-                                        nn.BatchNorm2d(16),
+        self.conv_layer = nn.Sequential(nn.Conv2d(in_channels, 8, kernel_size=kernel_size, stride=stride, padding=padding),
+                                        nn.BatchNorm2d(8),
                                         nn.ReLU())
         
         self.pool = nn.MaxPool2d(kernel_size=2)
 
-        self.layer0 = self._make_layer(block, 16, 16, 3, 1, layers[0], True)
-        self.layer1 = self._make_layer(block, 16, 32, 3, 2, layers[1], False)
-        self.layer2 = self._make_layer(block, 32, 64, 3, 2, layers[2], False)
-        self.layer3 = self._make_layer(block, 64, 128, 3, 2, layers[3], False)
+        self.layer0 = self._make_layer(block, 8, 8, 3, 1, layers[0], True)
+        self.layer1 = self._make_layer(block, 8, 12, 3, 2, layers[1], False)
+        self.layer2 = self._make_layer(block, 12, 16, 3, 2, layers[2], False)
+        self.layer3 = self._make_layer(block, 16, 24, 3, 2, layers[3], False)
 
         self.end_pool = nn.MaxPool2d(kernel_size=2)
 
-        self.fc = nn.Linear(2048, out_size)
+        self.fc = nn.Linear(384, out_size)
     
     def _make_layer(self, block, in_channels, out_channels, kernel, stride, layers, first=True):
         downsample = None
