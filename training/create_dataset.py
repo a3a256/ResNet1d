@@ -6,14 +6,24 @@ def generate_dataset():
     dataset = load_dataset('Falah/Alzheimer_MRI', split='train')
     test = load_dataset('Falah/Alzheimer_MRI', split='test')
 
-    images = []
-    labels = []
+    train_images = []
+    train_labels = []
+
+    test_images = []
+    test_labels = []
 
     for i in dataset:
-        images += [np.array(i["image"])]
-        labels += [i["label"]]
-        
-    images = np.array(images)
-    labels = np.array(labels)
+        train_images += [np.array(i["image"])]
+        train_labels += [i["label"]]
 
-    return images, labels
+    for i in test:
+        test_images += [np.array(i["image"])]
+        test_labels += [i["label"]]
+        
+    train_images = np.array(train_images)
+    train_labels = np.array(train_labels)
+
+    test_images = np.array(test_images)
+    test_labels = np.array(test_labels)
+
+    return train_images, train_labels, test_images, test_labels

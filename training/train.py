@@ -123,6 +123,8 @@ def training(epochs, lr, step, gamma, batch, out_size=4):
 
     model, best_model = training_model_whole(train_dl, val_dl, model, criterion, optimizer, scheduler, EPOCHS)
 
+    return model, best_model
+
 
 if __name__ == "__main__":
     pass
