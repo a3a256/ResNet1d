@@ -87,8 +87,36 @@ def training_model_whole(train_dl, val_dl, model, criterion, optimizer, schedule
 
     return model, best_model
 
-def training(epochs, lr, step, gamma, batch, out_size=4):
-    images, labels = generate_dataset()
+def validating(images, labels, model):
+    model.eval()
+
+    transform = transforms.Compose([transforms.ToPILImage(),
+                               transforms.ToTensor(),
+                               transforms.Normalize(mean=[0.5],
+                                                   std=[0.5])])
+
+    pred = []
+    truth = []
+
+    for i in range(images.shape[0]):
+        img = transform(images[i])
+        img = img.view([1, 1, 128, 128])
+        if torch.cuda.is_available():
+            img = img.cuda()
+        out = model(img)
+        pred += [out.argmax(1).item()]
+        truth += [labels[i]]
+    
+    score = accuracy_score(pred, truth)
+    report = classification_report(pred, truth)
+    cm = confusion_matrix(pred, truth)
+    print(report)
+
+    sns.heatmap(cm, annot=True, fmt='d')
+    plt.title("Score: {}".format(round(score*100, 2)))
+    plt.show()
+
+def training(images, labels, epochs=20, lr=0.1, step=0.1, gamma=10, batch=128, out_size=4):
 
 
     transform = transforms.Compose([transforms.ToPILImage(),
@@ -127,4 +155,8 @@ def training(epochs, lr, step, gamma, batch, out_size=4):
 
 
 if __name__ == "__main__":
-    pass
+    train_images, train_labels, test_images, test_labels = generate_dataset()
+
+    model, best_model = training(train_images, train_labels)
+
+    validating(test_images, test_labels, best_model)
