@@ -155,6 +155,8 @@ def training(images, labels, epochs=20, lr=0.1, step=0.1, gamma=10, batch=128, o
 
 
 if __name__ == "__main__":
+
+    
     train_images, train_labels, test_images, test_labels = generate_dataset()
 
     model, best_model = training(train_images, train_labels)
