@@ -60,7 +60,6 @@ class ResNet(nn.Module):
         x = self.layer2(x)
         x = self.layer3(x)
         x = self.end_pool(x)
-        print(x.shape)
         x = torch.flatten(x, start_dim=1)
         x = self.fc(x)
 

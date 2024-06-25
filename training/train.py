@@ -85,6 +85,25 @@ def training_model_whole(train_dl, val_dl, model, criterion, optimizer, schedule
                                                                     val_loss[-1], val_acc[-1]))
         scheduler.step()
 
+    fig, axes = plt.subplots(ncols=2, figsize=(15, 6))
+
+    index = 0
+
+    axes[index].plot(train_loss, label="Training")
+    axes[index].plot(val_loss, label="Validation")
+    axes[index].legend()
+    axes[index].set_title("Loss log")
+
+    index += 1
+
+    axes[index].plot(train_acc, label="Training")
+    axes[index].plot(val_acc, label="Validation")
+    axes[index].legend()
+    axes[index].set_title("Accuracy log")
+
+    plt.tight_layout()
+    plt.show()
+
     return model, best_model
 
 def validating(images, labels, model):
@@ -113,10 +132,10 @@ def validating(images, labels, model):
     print(report)
 
     sns.heatmap(cm, annot=True, fmt='d')
-    plt.title("Score: {}".format(round(score*100, 2)))
+    plt.title("Score: {}%".format(round(score*100, 2)))
     plt.show()
 
-def training(images, labels, epochs=20, lr=0.1, step=0.1, gamma=10, batch=128, out_size=4):
+def training(images, labels, epochs=1, lr=0.1, step=0.1, gamma=10, batch=128, out_size=4):
 
 
     transform = transforms.Compose([transforms.ToPILImage(),
