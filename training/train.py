@@ -135,7 +135,7 @@ def validating(images, labels, model):
     plt.title("Score: {}%".format(round(score*100, 2)))
     plt.show()
 
-def training(images, labels, epochs=1, lr=0.1, step=0.1, gamma=10, batch=128, out_size=4):
+def training(images, labels, epochs=20, lr=0.1, step=0.1, gamma=10, batch=128, out_size=4):
 
 
     transform = transforms.Compose([transforms.ToPILImage(),

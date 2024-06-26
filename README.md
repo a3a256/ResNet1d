@@ -10,4 +10,6 @@ Repository installation (yet to test the training script and workout requirement
 
 ```bash
 git clone https://github.com/a3a256/ResNet1d.git
+pip install -r requirements.txt
+python3 training/train.py
 ```
