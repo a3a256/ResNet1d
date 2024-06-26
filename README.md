@@ -6,7 +6,7 @@ Image classification is a long-standing and one of the most researched problems 
 
 Experiment results displayed and discussed are saved and portrayed in [notebooks](notebooks/)
 
-Repository installation (yet to test the training script and workout requirements part):
+Repository installation and training instruction:
 
 ```bash
 git clone https://github.com/a3a256/ResNet1d.git
